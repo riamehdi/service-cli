@@ -4,6 +4,7 @@
 IMAGE ?= docksal/cli
 VERSION_PREFIX ?= php
 VERSION ?= 8.0
+FROM ?= php:8.0-fpm-buster
 BUILD_IMAGE_TAG ?= $(IMAGE):$(VERSION_PREFIX)$(VERSION)-build
 NAME = docksal-cli-$(VERSION)-$(GIT_SHA7)
 CWD = $(shell pwd)
@@ -18,14 +19,14 @@ VOLUMES = -v /home/docker
 default: build
 
 build:
-	docker build -t $(BUILD_IMAGE_TAG) .
+	docker build --build-arg FROM=$(FROM) --build-arg VERSION=$(VERSION) -t $(BUILD_IMAGE_TAG) .
 
 # See https://docs.docker.com/buildx/working-with-buildx/
 # See https://github.com/docker/buildx
 buildx:
-	docker buildx build --tag $(BUILD_IMAGE_TAG) .
+	docker buildx build --build-arg FROM=$(FROM) --build-arg VERSION=$(VERSION) --tag $(BUILD_IMAGE_TAG) .
 buildx-with-cache:
-	docker buildx build --cache-from=type=registry,ref=$(BUILD_IMAGE_TAG) --cache-to=type=inline --tag=$(BUILD_IMAGE_TAG) .
+	docker buildx build --build-arg FROM=$(FROM) --build-arg VERSION=$(VERSION) --cache-from=type=registry,ref=$(BUILD_IMAGE_TAG) --cache-to=type=inline --tag=$(BUILD_IMAGE_TAG) .
 
 test:
 	NAME=$(NAME) VERSION=$(VERSION) ../tests/test.bats

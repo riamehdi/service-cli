@@ -1,5 +1,7 @@
-FROM php:7.4-fpm-buster as cli
+ARG FROM
+FROM ${FROM} as cli
 
+ARG VERSION
 ARG TARGETARCH
 ARG DEBIAN_FRONTEND=noninteractive
 ARG APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=1
@@ -155,7 +157,6 @@ RUN set -xe; \
 		libxslt1.1 \
 		libzip4 \
 	;\
-	# --with-png-dir has been removed in PHP 7.4. libpng is required
 	docker-php-ext-configure >/dev/null gd \
 		--with-freetype \
 		--with-jpeg \
@@ -194,7 +195,6 @@ RUN set -xe; \
 		apcu \
 		gnupg \
 		imagick \
-		# Use memcached (not memcache) for PHP 7.x
 		memcached \
 		redis \
 		ssh2-beta \
