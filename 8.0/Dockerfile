@@ -1,7 +1,9 @@
-ARG FROM
-FROM ${FROM} as cli
-
 ARG VERSION
+FROM php:${VERSION}-fpm-buster as cli
+
+# Has to be set again after FROM
+ARG VERSION
+
 ARG TARGETARCH
 ARG DEBIAN_FRONTEND=noninteractive
 ARG APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=1
