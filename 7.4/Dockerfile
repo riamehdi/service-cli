@@ -479,8 +479,8 @@ ENV \
 	# Delay in seconds between pings web from cli, while running fin exec. 0 - disabled
 	WEB_KEEPALIVE=0 \
 	# xdebug disabled by default
-	XDEBUG_ENABLED=0 \
-	XHPROF_ENABLED=0 \
+	XDEBUG_ENABLED=1 \
+	XHPROF_ENABLED=1 \
 	XHPROF_OUTPUT_DIR=/tmp/xhprof
 
 # TODO: [v3] remove and set these via docker-compose
