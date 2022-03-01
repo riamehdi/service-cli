@@ -515,6 +515,7 @@ ENV \
 	VSCODE_HOME="${HOME}/code-server"
 
 # Install code-server
+ARG TARGETARCH=amd64
 RUN set -xe; \
 	curl -fsSL "https://github.com/cdr/code-server/releases/download/v${CODE_SERVER_VERSION}/code-server_${CODE_SERVER_VERSION}_${TARGETARCH}.deb" -o /tmp/code-server_${TARGETARCH}.deb; \
 	sudo dpkg -i /tmp/code-server_${TARGETARCH}.deb; \
